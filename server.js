@@ -13,9 +13,13 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
         app.use(express.static('public'))
         app.use(bodyParser.json())
         app.use(bodyParser.urlencoded({ extended: true }))
-        app.listen(3000, function() {
-            console.log('listening on 3000')
-        })
+        port = process.env.PORT || 80
+        app.listen(port,
+            () =>
+            console.log(`Started server at ${port}`));
+        // app.listen(3000, function() {
+        //     console.log('listening on 3000')
+        // })
         app.get('/', (req, res) => {
             db.collection('role').find().toArray()
                 .then(results => {
