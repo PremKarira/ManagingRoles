@@ -1,0 +1,43 @@
+const update = document.querySelector('#update-button')
+update.addEventListener('click', _ => {
+    fetch('/role', {
+            method: 'put',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name1: document.getElementById("name1").value,
+                name2: document.getElementById("name2").value
+            })
+        }).then(res => {
+            if (res.ok) return res.json()
+        })
+        .then(response => {
+            window.location.reload(true)
+        })
+})
+
+const deleteButton = document.querySelector('#delete-button')
+const messageDiv = document.querySelector('#message')
+deleteButton.addEventListener('click', _ => {
+    fetch('/role', {
+            method: 'delete',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                role: document.getElementById("deleteRole").value
+            })
+        })
+        .then(res => {
+            if (res.ok) return res.json()
+            if (res === 'No role to delete') {
+                messageDiv.textContent = 'No role to delete'
+            } else {
+                window.location.reload(true)
+            }
+        })
+        .then(data => {
+            window.location.reload()
+        })
+})
